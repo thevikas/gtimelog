@@ -2,6 +2,8 @@
 Settings for GTimeLog
 """
 
+from __future__ import absolute_import
+
 import datetime
 import locale
 import os
@@ -64,7 +66,7 @@ class Settings(object):
             return os.path.expanduser(legacy_default_home)
         return None
 
-    # http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+    # https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
     def get_config_dir(self):
         legacy = self.check_legacy_config()

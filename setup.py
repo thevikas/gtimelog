@@ -3,7 +3,7 @@ import os
 import re
 import io
 import sys
-from setuptools import setup
+from setuptools import setup, find_packages
 
 here = os.path.dirname(__file__)
 
@@ -21,7 +21,7 @@ metadata = dict(
 
 version = metadata['__version__']
 
-changes = read('NEWS.rst').split('\n\n\n')
+changes = read('CHANGES.rst').split('\n\n\n')
 changes_in_latest_versions = '\n\n\n'.join(changes[:3])
 older_changes = '''
 Older versions
@@ -29,7 +29,7 @@ Older versions
 
 See the `full changelog`_.
 
-.. _full changelog: https://github.com/gtimelog/gtimelog/blob/master/NEWS.rst
+.. _full changelog: https://github.com/gtimelog/gtimelog/blob/master/CHANGES.rst
 '''
 
 short_description = 'A Gtk+ time tracking application'
@@ -55,20 +55,23 @@ setup(
     description=short_description,
     long_description=long_description,
     license='GPL',
+    keywords='time log logging timesheets gnome gtk',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: X11 Applications :: GTK',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Office/Business',
     ],
 
-    packages=['gtimelog'],
+    packages=find_packages('src'),
     package_dir={'': 'src'},
-    package_data={'gtimelog': ['*.ui', '*.png']},
+    include_package_data=True,
+    package_data={'': ['locale/*/LC_MESSAGES/gtimelog.mo']},
     test_suite='gtimelog.tests',
     tests_require=tests_require,
     extras_require={
@@ -84,7 +87,5 @@ setup(
     [gui_scripts]
     gtimelog = gtimelog.main:main
     """,
-# This is true, but pointless, because PyGObject cannot be installed via
-# setuptools/distutils
-#   install_requires=['PyGObject'],
+    install_requires=['PyGObject'],
 )
